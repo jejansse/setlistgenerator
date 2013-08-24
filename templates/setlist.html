@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Setlist Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <h1>Setlist Generator</h1>
+    <ul class="nav nav-tabs" id="navPane">
+    	<li class="active"><a href="#songs" data-toggle="tab">Songs</a></li>
+    	<li><a href="#properties" data-toggle="tab">Properties</a></li>
+    	<li><a href="#constraints" data-toggle="tab">Constraints</a></li>
+    </ul>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="tab-content">
+            	<div class="tab-pane active" id="songs">
+                    <div class="input-group">
+                        <input type="text" id="song-name" class="form-control" placeholder="Song name, e.g. 'Stairway To Heaven'">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" type="button" id="add-song-button"><span class="glyphicon glyphicon-plus-sign"></span> Add</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="tab-pane" id="properties">
+            		<input type="text">
+            	</div>
+            	<div class="tab-pane" id="constraints">
+            		<input type="text">
+            	</div>
+            </div>
+        </div>
+        <div id="songs-pane" class="col-md-6">
+                <ol id="songs-list">
+                </ol>
+        </div>
+    </div>
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- Initially select first tab -->
+    <script>
+    	$(function () {
+    		$('#navPane a:first').tab('show');
+    	});
+        function addSong() {
+            $("#songs-list").append("<li>" + $("#song-name").val() + "</li>");
+            $("#song-name").val("");
+        }
+        $("#song-name").keydown(function (e) {
+            if (e.which == 13) {
+                addSong();
+            }
+        });
+        $("#add-song-button").bind("click", addSong);
+    </script>
+  </body>
+</html>
