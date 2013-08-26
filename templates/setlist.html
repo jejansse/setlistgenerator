@@ -21,28 +21,45 @@
     	<li><a href="#constraints" data-toggle="tab">Constraints</a></li>
     </ul>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="tab-content">
-            	<div class="tab-pane active" id="songs">
-                    <div class="input-group">
-                        <input type="text" id="song-name" class="form-control" placeholder="Song name, e.g. 'Stairway To Heaven'" autofocus="autofocus">
+    <div class="row">        
+        <div class="tab-content">
+        	<div class="tab-pane active" id="songs">
+                <div class="col-md-6 input-group">
+                    <input type="text" id="song-name" class="form-control" placeholder="Song name, e.g. 'Stairway To Heaven'" autofocus="autofocus">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" type="button" id="add-song-button"><span class="glyphicon glyphicon-plus-sign"></span> Add</button>
+                    </span>
+                </div>
+                <div class="col-md-6" id="songs-pane">
+                    <ol id="songs-list">
+                    </ol>
+                </div>
+            </div>
+            <div class="tab-pane" id="properties">
+        		<div class="col-md-6">
+                    <div class="col-md-6">
+                        <select class="form-control" id="song-name-selector">
+                            <option disabled="true">Select a song</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 input-group">
+                        <input type="text" id="song-property" class="form-control" placeholder="Property, e.g. 'eightstring', 'cover', 'e-minor'">
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" type="button" id="add-song-button"><span class="glyphicon glyphicon-plus-sign"></span> Add</button>
+                            <button type="button" class="btn btn-default" type="button" id="add-property-button"><span class="glyphicon glyphicon-plus-sign"></span> Add</button>
                         </span>
                     </div>
                 </div>
-                <div class="tab-pane" id="properties">
-            		<input type="text">
-            	</div>
-            	<div class="tab-pane" id="constraints">
-            		<input type="text">
-            	</div>
-            </div>
-        </div>
-        <div id="songs-pane" class="col-md-6">
-                <ol id="songs-list">
-                </ol>
+                <div class="col-md-6" id="properties-pane">
+                    <ol id="properties-list">
+                    </ol>
+                </div>
+        	</div>
+        	<div class="tab-pane" id="constraints">
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-6">
+                </div>
+        	</div>
         </div>
     </div>
     
@@ -56,15 +73,30 @@
     		$('#navPane a:first').tab('show');
     	});
         function addSong() {
-            $("#songs-list").append("<li>" + $("#song-name").val() + "</li>");
+            var songName = $("#song-name").val();
+            $("#songs-list").append("<li>" + songName + "</li>");
+            $("#song-name-selector").append("<option value='" + songName + "'>" + songName + "</option>");
             $("#song-name").val("");
+        }
+        function addProperty() {
+            var songName = $("#song-name-selector").val();
+            var songProperty = $("#song-property").val();
+            $("#properties-list").append("<li>" + songName + ": " + songProperty + "</li>");
+            $("#song-name-selector").prop('selectedIndex', 0);
+            $("#song-property").val("");
         }
         $("#song-name").keydown(function (e) {
             if (e.which == 13) {
                 addSong();
             }
         });
+        $("#song-property").keydown(function (e) {
+            if (e.which == 13) {
+                addProperty();
+            }
+        });
         $("#add-song-button").bind("click", addSong);
+        $("#add-property-button").bind("click", addProperty);
     </script>
   </body>
 </html>
