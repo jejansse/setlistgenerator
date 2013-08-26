@@ -60,6 +60,8 @@
                 <div class="col-md-6">
                 </div>
         	</div>
+            <div class="tab-pane" id="result">
+            </div>
         </div>
     </div>
     
@@ -69,32 +71,44 @@
     <script src="../js/bootstrap.min.js"></script>
     <!-- Initially select first tab -->
     <script>
+        songs = {};
+
     	$(function () {
     		$('#navPane a:first').tab('show');
     	});
+
         function addSong() {
             var songName = $("#song-name").val();
             $("#songs-list").append("<li>" + songName + "</li>");
             $("#song-name-selector").append("<option value='" + songName + "'>" + songName + "</option>");
             $("#song-name").val("");
+            var song = new Object();
+            song.title = songName;
+            songs[song.title] = song;
         }
+
         function addProperty() {
             var songName = $("#song-name-selector").val();
             var songProperty = $("#song-property").val();
             $("#properties-list").append("<li>" + songName + ": " + songProperty + "</li>");
             $("#song-name-selector").prop('selectedIndex', 0);
             $("#song-property").val("");
+            var song = songs[songName];
+            song[songProperty] = true;
         }
+
         $("#song-name").keydown(function (e) {
             if (e.which == 13) {
                 addSong();
             }
         });
+
         $("#song-property").keydown(function (e) {
             if (e.which == 13) {
                 addProperty();
             }
         });
+
         $("#add-song-button").bind("click", addSong);
         $("#add-property-button").bind("click", addProperty);
     </script>
